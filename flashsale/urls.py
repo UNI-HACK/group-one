@@ -15,7 +15,24 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from facturacion import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^iniciar$', views.iniciar_sesion),
+    url(r'^salir$', views.cerrar_session),
+    url(r'^registro$', views.registro), #falta
+    url(r'^clave$', views.cambiar_clave), #falta
+    url(r'^$', views.index),
+    url(r'^busqueda$', views.busqueda), #falta
+    url(r'^categorias$', views.categorias),
+    url(r'^categorias/(\d)$', views.categoria),
+    url(r'^productos/editar/(\d)$', views.granjero_producto), #falta
+    url(r'^productos/agregar$', views.granjero_agregar), #falta
+    url(r'^ordenes$', views.granjero_ordenes), #falta
+    url(r'^ordenes/{1}$', views.granjero_orden), #falta
+    url(r'^ordenes/historial$', views.granjero_ordenes_historial), #falta
+    url(r'^productos/(\d)$', views.comprador_producto), #falta
+    url(r'^granjeros$', views.granjeros), #falta
+    url(r'^granjeros/(\d)$', views.productos_de_granjero), #falta
 ]

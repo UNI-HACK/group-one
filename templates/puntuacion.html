@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" href="css/jquery.rateyo.min.css"/>
+	<title>Puntuatcion</title>
+</head>
+<body>
+<div id="rateYo"></div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery.rateyo.min.js"></script>
+  <script type="text/javascript">
+  	/* Javascript */
+// Anonymous Function
+//Make sure that the dom is ready
+$(function () {
+ 
+  $("#rateYo").rateYo({
+    rating: 0,
+     precision: 0
+  })
+  .on("rateyo.set",function(e,data){
+  	  var rating = data.rating;
+  	  alert(rating);
+  });
+ 
+});
+  </script>
+</body>
+</html>

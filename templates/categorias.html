@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+     <table class="table table-hover table-striped">
+       <thead>
+        <tr>
+            <th>Nombre</th><th>Descripcion</th><th>Accion</th>           
+          </tr>
+        </thead> 
+        <tbody>
+          {% for i in categorias %}
+          <tr>
+            <td>{{i.nombre}}</td>
+            <td>{{i.descripcion}}</td>
+            <td><center><a href='categorias/{{i.id}}' class="btn btn-primary btn-sm">Ver</a></center></td>
+          </tr>
+          {% endfor %} 
+        </tbody>
+     </table>
+{% endblock %}
