@@ -8,5 +8,15 @@
 	<td>{{i.nombre}}</td>
 	<td>{{i.cantidad}}</td>
 	<td>{{i.precio}}</td>
-	<td><center><a href="productos/{{i.id}}" class="btn btn-primary btn-xs">Comprar</a></center></td>
+	<td><center>
+		<form method="POST" action="/carrito/agregar/{{i.id}}">{% csrf_token %}
+			<div class="input-group">
+		      <div class="input-group-btn">
+						<input class="form-control short-input"  type="text" placeholder="Cantidad" name="cantidad">
+						<button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></button>						
+				</div>
+			</div>
+		</form>
+	</center></td>
 {% endblock %}
+

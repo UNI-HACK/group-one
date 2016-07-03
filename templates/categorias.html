@@ -4,15 +4,14 @@
      <table class="table table-hover table-striped">
        <thead>
         <tr>
-            <th>Nombre</th><th>Descripcion</th><th>Accion</th>           
+            <th>Nombre</th><th>Descripcion</th>           
           </tr>
         </thead> 
         <tbody>
           {% for i in categorias %}
-          <tr>
+          <tr class="clickable-row" data-href='/categorias/{{i.id}}'>
             <td>{{i.nombre}}</td>
             <td>{{i.descripcion}}</td>
-            <td><center><a href='categorias/{{i.id}}' class="btn btn-primary btn-xs">Ver</a></center></td>
           </tr>
           {% endfor %} 
         </tbody>

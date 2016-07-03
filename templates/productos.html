@@ -2,14 +2,14 @@
 
 {% block content %}
      <table class="table table-hover table-striped">
-       <thead>
-        <tr>
-            {% block thead %}{% endblock%}           
-          </tr>
+       <thead>     
+         <tr>   
+            {% block thead %}{% endblock%}
+          </tr>                     
         </thead> 
         <tbody>
           {% for i in productos %}
-          <tr {% if i.activo == 0 %} class="warning"{% endif %}>
+          <tr {% if user.usuario.tipo == 'Vendedor' %} class="clickable-row {% if i.activo == 0 %} warning {% endif %}" data-href='{% block rowlink %}{% endblock %}' {% endif %}>
             {% block tbody %}{% endblock%}
           </tr>
           {% endfor %} 

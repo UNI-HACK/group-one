@@ -3,7 +3,9 @@
 {% block content %}
 <div class="container">
 	<div class="panel panel-default">
-	  <div class="panel-heading"><h4>Orden # {{orden.po}}</h4></div>
+	  <div class="panel-heading">
+      <h4>Orden # {{orden.po}}</h4>        
+    </div>
 	  <div class="panel-body">
       <div class="row">
         <div class="col-md-6">
@@ -33,8 +35,17 @@
               <input class="form-control" id="disabledInput" type="text" placeholder="{{orden.direccion_envio}}" disabled name="direnvio">
             </div>
           </div>
-        </div>
+        </div>        
       </div>
+      <br>
+      <div class="row">
+	      <div class="col-md-12 rightA">
+          <form action="#" method="POST">{% csrf_token %}
+            <button type="submit" class="btn btn-success btn-sm" name="entregar" id="entregar">Entregar</button>
+          </form>
+          </div>
+      </div>
+      
       <hr>
       <div class="row">
         <table class="table table-hover table-striped">
@@ -56,9 +67,4 @@
     </div>
   </div>
 </div>
-{% endblock %}
-
-{% block botones %}
-  aca seria un form
-	<li><a href="entregar">Entregar</a></li>
 {% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+      <h4>Compra</h4>        
+    </div>
+	  <div class="panel-body">
+          {{form.errors}}
+    <form action="#" method="POST">{% csrf_token %}
+      <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+              <label for="inputTotal" class="col-sm-3 control-label">Requiere envio</label>
+              <div class="col-sm-10">
+                {{form.requiere_envio}}
+                {% if form.errors.requiere_envio %} {{form.errors.requiere_envio}} {% endif %}
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="inputComprador" class="col-sm-3 control-label">PO</label>
+            <div class="col-sm-10">
+                {{form.po}}
+                {% if form.errors.po %} {{form.errors.po}} {% endif %}
+            </div>
+          </div>           
+        </div>
+        <div class="col-md-6">        
+          <div class="form-group">
+              <label for="inputHoraEnvio" class="col-sm-3 control-label">Direccion</label>
+              <div class="col-sm-10">
+                {{form.direccion_envio}}
+                {% if form.errors.direccion_envio %} {{form.errors.direccion_envio}} {% endif %}
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="inputDirEnvio" class="col-sm-3 control-label">Hora</label>
+            <div class="col-sm-10">
+                {{form.hora_envio}}
+                {% if form.errors.hora_envio %} {{form.errors.hora_envio}} {% endif %}
+            </div>
+          </div>          
+        </div>  
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="inputDirEnvio" class="col-sm-3 control-label">Total</label>
+                <div class="col-sm-10">
+                    {{form.total}}
+                    {% if form.errors.total %} {{form.errors.total}} {% endif %}
+                </div>
+            </div>                          
+            <div class="form-group">
+                <label for="inputDirEnvio" class="col-sm-3 control-label">Comentario</label>
+                <div class="col-sm-10">
+                    {{form.comentario}}
+                    {% if form.errors.comentario %} {{form.errors.comentario}} {% endif %}
+                </div>
+            </div>                  
+          </div>
+      </div>
+      <br>
+
+      <div class="row">
+	      <div class="col-md-12 rightA">
+            <button type="submit" class="btn btn-danger btn-sm" name="eliminar_todo" id="eliminar_todo">Eliminar</button>
+            <button type="submit" class="btn btn-success btn-sm" name="comprar" id="comprar">Comprar</button>
+          </div>
+      </div>
+
+    </form>
+      
+      <hr>
+      <div class="row">
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr> <th>Producto</th> <th>Cantidad</th> <th>Precio</th> <th>Accion</th> </tr>
+          </thead> 
+          <tbody>
+            {% for i in lista %} 
+            <tr>
+              <td>{{i.producto}}</td>
+              <td>{{i.cantidad}}</td>
+              <td>{{i.producto.precio}}</td>
+              <td>
+
+               <form action="/carrito/eliminar/{{i.id}}" method="POST">{% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-xs" name="eliminar_detalle" id="eliminar_detalle">Eliminar</button>
+               </form>
+              </td>
+            </tr> 
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

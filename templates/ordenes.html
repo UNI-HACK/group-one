@@ -7,7 +7,7 @@
         </thead> 
         <tbody> 
          {% for i in ordenes %}
-          <tr {% if i.anulado == 1 %} class="danger"{% elif i.entregado == 1 %}class="success"{% endif %}>
+          <tr class="clickable-row {% if i.anulado == 1 %} danger{% elif i.entregado == 1 %} success{% endif %}" data-href='{% block rowlink %}{% endblock %}'>
             {% block tbody %}{% endblock %}
           </tr>
           {% endfor %}  

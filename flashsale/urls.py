@@ -31,18 +31,21 @@ urlpatterns = [
     url(r'^registro$', views.registro), #falta
     url(r'^clave$', views.cambiar_clave), #falta
     url(r'^$', views.index),
-    url(r'^busqueda$', views.busqueda), #falta
+    url(r'^busqueda$', views.busqueda), 
     url(r'^categorias$', views.categorias),
-    url(r'^categorias/(\d)$', views.categoria),
-    url(r'^productos/(\d)$', views.producto), #falta
-    url(r'^productos/editar/(\d)$', views.editar_producto), #falta
+    url(r'^categorias/(\d{1,2})$', views.categoria),
+    url(r'^productos/editar/(\d{1,2})$', views.editar_producto),
     url(r'^productos/nuevo$', views.nuevo_producto),
 
     url(r'^ordenes$', views.ordenes),
-    url(r'^ordenes/(\d)$', views.orden), #falta
+    url(r'^ordenes/(\d{1,2})$', views.orden),
     url(r'^ordenes/historial$', views.ordenes_historial),
     url(r'^granjeros$', views.granjeros), #falta
-    url(r'^granjeros/(\d)$', views.productos_de_granjero), #falta
+    url(r'^granjeros/(\d{1,2})$', views.productos_de_granjero), #falta
+    url(r'^carrito$', views.carrito),
+    url(r'^carrito/agregar/(\d{1,2})$', views.agregar_carrito),
+    url(r'^carrito/eliminar/(\d{1,2})$', views.carrito_eliminar_detalle),
+    
 
     #API
     url(r'^api/', include(router.urls)),

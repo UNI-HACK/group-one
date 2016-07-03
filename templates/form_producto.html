@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% if msg == 'error' %}
-    <div class="alert alert-danger" role="alert"><center>Error al iniciar sesión. Verifique los datos proporcionados.<center></div>
+  {% if form.errors %}
+    <div class="alert alert-danger" role="alert"><center>Error. Verifique los datos proporcionados.<center></div>
   {% elif msg == 'ok' %}
     <div class="alert alert-success" role="alert"><center>Guardado. Se han almacenados los datos proporcionados.<center></div>
   {% endif%}
@@ -75,4 +75,10 @@
   </div>
 
 </form>
+{% endblock %}
+
+{% block js %}
+<script>
+  $( "id_vendedor" ).prop( "disabled", true );
+</script>
 {% endblock %}

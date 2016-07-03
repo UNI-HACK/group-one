@@ -44,3 +44,7 @@ class ProductoForm(forms.ModelForm):
 #labs = Laboratory.objects.filter(enable=True)
 #self.fields['laboratory'].queryset = labs
 
+class FacturaForm(forms.ModelForm):	
+	class Meta:
+		model = models.Factura
+		fields = "__all__"

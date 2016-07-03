@@ -36,11 +36,12 @@ class Producto(models.Model):
     # foto
 
     def __str__(self):
-        return self.nombre + ' - ' + str(self.vendedor)
+        return self.nombre
 
     def agregar_descomposicion(self, q):
         self.cantidad = self.cantidad - q
         self.en_descomposicion = self.en_descomposicion + q
+
     
 class Factura(models.Model):
     fecha_creacion = models.DateField(auto_now_add=True)
@@ -49,7 +50,7 @@ class Factura(models.Model):
     hora_envio = models.TimeField()
     anulado = models.BooleanField()
     entregado = models.BooleanField()
-    total = models.DecimalField(max_digits=10, decimal_places=2)
+    total = models.DecimalField(max_digits=10, decimal_places=4)
     comentario = models.TextField(blank=True, null=True)
     po = models.CharField(max_length=100)
     comprador = models.ForeignKey(Usuario, related_name="fac_comprador")
@@ -80,4 +81,18 @@ class DetalleFactura(models.Model):
 
     def anular(self):
         anulado = True
-        self.factura.total = self.factura.total - self.subtotal 
+        self.factura.total = self.factura.total - self.subtotal
+
+    def restar(self):
+	    tpro = self.producto
+	    tpro.cantidad = tpro.cantidad - self.cantidad
+	    tpro.save()
+
+
+class DetalleCarro(models.Model):
+    producto = models.ForeignKey(Producto)
+    cantidad = models.DecimalField(max_digits=10, decimal_places=2)
+    comprador = models.ForeignKey(Usuario)
+
+    def __str__(self):
+        return self.producto.nombre + ' - Cantidad: ' + str(self.cantidad)
