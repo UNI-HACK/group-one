@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -47,9 +48,43 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (                 
-        'rest_framework.authentication.BasicAuthentication',
-    ),
+        #'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+),
 }
+
+JWT_AUTH = {
+    'JWT_ENCODE_HANDLER':
+    'rest_framework_jwt.utils.jwt_encode_handler',
+
+    'JWT_DECODE_HANDLER':
+    'rest_framework_jwt.utils.jwt_decode_handler',
+
+    'JWT_PAYLOAD_HANDLER':
+    'rest_framework_jwt.utils.jwt_payload_handler',
+
+    'JWT_PAYLOAD_GET_USER_ID_HANDLER':
+    'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+    'rest_framework_jwt.utils.jwt_response_payload_handler',
+
+    'JWT_SECRET_KEY': SECRET_KEY,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LEEWAY': 0,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=800),
+    'JWT_AUDIENCE': None,
+    'JWT_ISSUER': None,
+
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(seconds=900),
+
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+}
+
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

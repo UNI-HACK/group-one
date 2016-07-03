@@ -24,6 +24,10 @@ router = DefaultRouter()
 router.register(r'producto', views.ProductoViewSet)
 router.register(r'factura', views.FacturaViewSet)
 
+from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_jwt.views import refresh_jwt_token
+from rest_framework_jwt.views import verify_jwt_token
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^iniciar$', views.iniciar_sesion),
@@ -50,4 +54,9 @@ urlpatterns = [
     #API
     url(r'^api/', include(router.urls)),
     url(r'^api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+    url(r'^api/api-token-auth/', obtain_jwt_token),
+    url(r'^api/api-token-refresh/', refresh_jwt_token),
+    url(r'^api/api-token-verify/', verify_jwt_token),
+
 ]

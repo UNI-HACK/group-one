@@ -83,10 +83,6 @@ class DetalleFactura(models.Model):
         anulado = True
         self.factura.total = self.factura.total - self.subtotal
 
-    def restar(self):
-	    tpro = self.producto
-	    tpro.cantidad = tpro.cantidad - self.cantidad
-	    tpro.save()
 
 
 class DetalleCarro(models.Model):
