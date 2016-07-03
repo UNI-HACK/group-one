@@ -13,10 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import DetailView, CreateView, UpdateView
 from facturacion import views, models
+
+from rest_framework import renderers
+from rest_framework.routers import DefaultRouter
+router = DefaultRouter()
+router.register(r'producto', views.ProductoViewSet)
+router.register(r'factura', views.FacturaViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,11 +36,15 @@ urlpatterns = [
     url(r'^categorias/(\d)$', views.categoria),
     url(r'^productos/(\d)$', views.producto), #falta
     url(r'^productos/editar/(\d)$', views.editar_producto), #falta
-    url(r'^productos/nuevo$', CreateView.as_view(template_name='nuevo_producto.html', model=models.Producto, success_url="/", fields="__all__")), #falta
+    url(r'^productos/nuevo$', views.nuevo_producto),
 
     url(r'^ordenes$', views.ordenes),
     url(r'^ordenes/(\d)$', views.orden), #falta
     url(r'^ordenes/historial$', views.ordenes_historial),
     url(r'^granjeros$', views.granjeros), #falta
     url(r'^granjeros/(\d)$', views.productos_de_granjero), #falta
+
+    #API
+    url(r'^api/', include(router.urls)),
+    url(r'^api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

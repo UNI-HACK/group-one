@@ -2,7 +2,6 @@
 from django import forms
 from facturacion import models
 from datetime import date
-from facturacion import models
 
 class ClaveForm(forms.Form):
 	oldpassword = forms.CharField(max_length=100, widget=forms.PasswordInput)
@@ -18,3 +17,30 @@ class ClaveForm(forms.Form):
 		if len(newpassword) < 8:
 			raise forms.ValidationError("La clave debe tener al menos 8 caracteres.")
 		return newpassword2
+
+
+class ProductoForm(forms.ModelForm):	
+	class Meta:
+		model = models.Producto
+		fields = "__all__"
+
+	def clean_cantidad(self):
+		clean_dictionary = self.cleaned_data
+		cantidad = clean_dictionary.get('cantidad')
+		if cantidad < 0:
+			raise forms.ValidationError("El valor debe ser mayor o igual a cero.")
+		return cantidad
+
+	def clean_en_descomposicion(self):
+		clean_dictionary = self.cleaned_data
+		en_descomposicion = clean_dictionary.get('en_descomposicion')
+		if en_descomposicion < 0:
+			raise forms.ValidationError("El valor debe ser mayor o igual a cero.")
+		return en_descomposicion
+
+	def __init__(self, *args, **kwargs):
+		super(ProductoForm, self).__init__(*args, **kwargs)
+		self.fields['vendedor'].widget.attrs['disabled'] = True
+#labs = Laboratory.objects.filter(enable=True)
+#self.fields['laboratory'].queryset = labs
+

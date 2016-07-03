@@ -1,0 +1,79 @@
+body {
+  background-color: #eee;  
+}
+
+input{
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  width: 100%;
+}
+textarea{
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+input[readonly="True"]{
+  background-color: #f0f0f0;
+}
+
+select{
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+ul {
+ list-style-type: none;
+}
+
+.c-red{
+  color: red;
+}
+
+.rightA{
+	text-align: right;
+}
+
+.centerA{
+  text-align: center;
+}
+
+.table-responsive thead{
+  background-color: #f0f0f0;
+  margin-bottom: -18px;
+}
+
+.table-responsive{
+   margin-bottom: -20px;
+}
+
+.errorlist{
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 100%;  
+}
+
+.container{
+  margin-top: 70px;
+}
+
+.muted{
+  color: gray;
+}
+
+#workcontainer{
+  background-color: #fff; 
+  box-shadow: gray 0px 0px 10px;
+  border-radius: 10px;
+}
+
+select[name="vendedor"]{
+  display: none;  
+}
