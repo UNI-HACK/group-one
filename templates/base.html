@@ -9,31 +9,37 @@
     <meta name="author" content="">
     <title>{{titulo}}</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/yeti.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
     {% block css %}{% endblock %}          
   </head>
   <body>
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">{{titulo}}</a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="./">Ver<span class="sr-only">(current)</span></a></li>
-              <li><a href="#">Anexar</a></li>
-              <li><a href="#">Ordenes</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </nav>
-      {% block content %}{% endblock %}
+  <div class="input-group">
+      <div class="input-group-btn">
+        <a href="/" class="btn btn-default">
+          <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+        </a>
+        <a href="/categorias" class="btn btn-default">
+          <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+        </a>
+        <a href="/ordenes" class="btn btn-default">
+          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+        </a>
+      </div>
+      <input type="text" class="form-control" placeholder="Buscar...">
+      <div class="input-group-btn">
+        {% block botones %}{% endblock %}          
+        <a href="/busqueda" class="btn btn-default">
+          <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+        </a>
+        <a href="/salir" class="btn btn-default">
+          <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+        </a>
+      </div>
+  </div>
+  <br>
+  {% block content %}{% endblock %}
+
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script> 
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script> 
     <script type="text/javascript" src="{% static 'js/dropdown.js' %}"></script>

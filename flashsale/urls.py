@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from facturacion import views
+from django.views.generic import DetailView, CreateView, UpdateView
+from facturacion import views, models
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -27,12 +28,13 @@ urlpatterns = [
     url(r'^busqueda$', views.busqueda), #falta
     url(r'^categorias$', views.categorias),
     url(r'^categorias/(\d)$', views.categoria),
-    url(r'^productos/editar/(\d)$', views.granjero_producto), #falta
-    url(r'^productos/agregar$', views.granjero_agregar), #falta
-    url(r'^ordenes$', views.granjero_ordenes), #falta
-    url(r'^ordenes/{1}$', views.granjero_orden), #falta
-    url(r'^ordenes/historial$', views.granjero_ordenes_historial), #falta
-    url(r'^productos/(\d)$', views.comprador_producto), #falta
+    url(r'^productos/(\d)$', views.producto), #falta
+    url(r'^productos/editar/(\d)$', views.editar_producto), #falta
+    url(r'^productos/nuevo$', CreateView.as_view(template_name='nuevo_producto.html', model=models.Producto, success_url="/", fields="__all__")), #falta
+
+    url(r'^ordenes$', views.ordenes),
+    url(r'^ordenes/(\d)$', views.orden), #falta
+    url(r'^ordenes/historial$', views.ordenes_historial),
     url(r'^granjeros$', views.granjeros), #falta
     url(r'^granjeros/(\d)$', views.productos_de_granjero), #falta
 ]

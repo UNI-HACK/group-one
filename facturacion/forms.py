@@ -1,8 +1,8 @@
 #encoding:utf-8
-from django.forms import ModelForm
 from django import forms
 from facturacion import models
 from datetime import date
+from facturacion import models
 
 class ClaveForm(forms.Form):
 	oldpassword = forms.CharField(max_length=100, widget=forms.PasswordInput)
@@ -18,4 +18,3 @@ class ClaveForm(forms.Form):
 		if len(newpassword) < 8:
 			raise forms.ValidationError("La clave debe tener al menos 8 caracteres.")
 		return newpassword2
-

@@ -15,7 +15,7 @@ class Usuario(models.Model):
     )
 
     def __str__(self):
-        return self.django_user.username + ' (' + self.django_user.email + ')'
+        return self.django_user.username
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
@@ -27,9 +27,9 @@ class Categoria(models.Model):
 class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True, null=True)
-    cantidad = models.DecimalField(max_digits=10, decimal_places=2)
+    cantidad = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     en_descomposicion = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    precio = models.DecimalField(max_digits=10, decimal_places=2,default=0)
     categoria = models.ForeignKey(Categoria)
     vendedor = models.ForeignKey(Usuario)
     activo = models.BooleanField(default=True)
@@ -61,6 +61,12 @@ class Factura(models.Model):
     def anular(self):
         anulado = True
 
+    def entregar(self):
+        entregado = True
+
+    def detalle(self):
+        return DetalleFactura.objects.filter(factura=self.id)
+
 class DetalleFactura(models.Model):
     factura = models.ForeignKey(Factura)
     producto = models.ForeignKey(Producto)
@@ -70,7 +76,7 @@ class DetalleFactura(models.Model):
     subtotal = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return self.producto.nombre + ' - SubTotal $' + subtotal
+        return self.producto.nombre + ' - SubTotal $' + str(self.subtotal)
 
     def anular(self):
         anulado = True

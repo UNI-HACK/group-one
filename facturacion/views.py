@@ -7,6 +7,10 @@ from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
 # internas
+productos_txt="productos"
+ordenes_txt="ordenes"
+orden_txt="orden"
+
 def obtener_ordenes(user):
     if user.usuario.tipo == 'Vendedor':
         return models.Factura.objects.filter(vendedor=user.usuario) 
@@ -17,26 +21,32 @@ def obtener_productos(user):
     if user.usuario.tipo == 'Vendedor':
         return models.Producto.objects.filter(vendedor=user.usuario) 
     else:
-        return models.Producto.objects.filter(activo=True)
+        return models.Producto.objects.filter(activo=True) #cantidad > 0
+		
+def obtener_template(request, txt):
+	if request.user.usuario.tipo == 'Vendedor':
+		return 'granjero_'+txt+'.html'
+	else:
+		return 'comprador_'+txt+'.html'
 
-# de URL
+# de URLs generales
 def iniciar_sesion(request):
 	error = '0'
 	if not request.user.is_anonymous():
 		return HttpResponseRedirect('/')
 	if request.method=='POST':
-	    loginform=AuthenticationForm(request.POST)
-	    pusername = request.POST['email']
-	    ppassword = request.POST['password']
-	    acc = authenticate(username=pusername, password=ppassword)
+		loginform=AuthenticationForm(request.POST)
+		pusername = request.POST['email']
+		ppassword = request.POST['password']
+		acc = authenticate(username=pusername, password=ppassword)
 
-	    if acc is not None and acc.is_active:
-	        login(request, acc)
-	        return HttpResponseRedirect('/')
-	    else:
-	        error = '1'
+		if acc is not None and acc.is_active:
+			login(request, acc)
+			return HttpResponseRedirect('/')
+		else:
+			error = '1'
 	else:
-	    loginform = AuthenticationForm()
+		loginform = AuthenticationForm()
 	context = RequestContext(request,{'loginform':loginform,'error':error})
 	return render_to_response('login.html',context)
 
@@ -69,12 +79,7 @@ def registro(request):
 
 def index(request):
 	lista = obtener_productos(request.user)
-	file = ''
-	if request.user.usuario.tipo == 'Vendedor':
-		file = 'granjero_productos.html'
-	else:
-		file = 'comprador_productos.html'
-	return render_to_response(file, {'productos':lista})
+	return render_to_response(obtener_template(request,productos_txt), {'productos':lista})
 
 def busqueda(request):
 	lista = obtener_productos(request.user)
@@ -88,35 +93,40 @@ def categorias(request):
 
 def categoria(request, id):
     lista = obtener_productos(request.user).filter(categoria=id)    
-    return render_to_response('granjero_productos.html', {'productos':lista})
+    return render_to_response(obtener_template(request,productos_txt), {'productos':lista})
 
-def granjero_producto(request, id):
+
+def producto(request, id):
+    return render_to_response('...html', {'productos':'lista'}, context_instance=RequestContext(request))
+
+def nuevo_producto(request):
     return render_to_response('...html', {'productos':'lista'}, context_instance=RequestContext(request))
     # esta podria ser, una createView y UpdateVIew de vistas genericas
 
-def granjero_agregar(request):
+def editar_producto(request, id):
     return render_to_response('...html', {'productos':'lista'}, context_instance=RequestContext(request))
     # esta podria ser, una createView y UpdateVIew de vistas genericas
 
-def granjero_ordenes(request):
-    lista =obtener_ordenes().filter(entregado=False)
-    return render_to_response('...html', {'productos':'lista'}, context_instance=RequestContext(request))
+def ordenes(request):
+	lista =obtener_ordenes(request.user).filter(entregado=False).filter(anulado=False)
+	return render_to_response(obtener_template(request,ordenes_txt), {'ordenes':lista})
 
-def granjero_ordenes_historial(request):
-    lista = obtener_ordenes()
-    return render_to_response('...html', {'productos':'lista'}, context_instance=RequestContext(request))
+def ordenes_historial(request):
+	lista = obtener_ordenes(request.user)
+	return render_to_response(obtener_template(request,ordenes_txt), {'ordenes':lista})
 
-def granjero_orden(request, id):
-    item = obtener_ordenes().get(pk=id)
-    return render_to_response('...html', {'productos':'lista'}, context_instance=RequestContext(request))
-    
+def orden(request, id):
+	#hay que evaluar si es post, para ver si esta anulando o entregando, o anulando detalle
+	item = obtener_ordenes(request.user).get(pk=id)
+	return render_to_response(obtener_template(request,orden_txt),{'orden':item})
+
 def comprador_producto(request, id):
     item = obtener_productos().get(pk=id)
     return render_to_response('...html', {'producto':'item'}, context_instance=RequestContext(request))
 
 def granjeros(request):
     lista = models.Usuario.objects.all()
-    return render_to_response('vendedores.html', {'vendedores',lista})
+    return render_to_response('_vendedores.html', {'vendedores':lista})
 
 def productos_de_granjero(request):
     lista = obtener_productos(request.user)
